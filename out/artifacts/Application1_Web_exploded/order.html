@@ -11,6 +11,42 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fa-solid fa-cogs me-2"></i>Management System
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end gap-3" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        <i class="fa-solid fa-users me-2"></i>Customer
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="item.html">
+                        <i class="fa-solid fa-boxes-stacked me-2"></i>Item
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="order.html">
+                        <i class="fa-solid fa-shopping-cart me-2"></i>Order
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="order_details.html">
+                        <i class="fa-solid fa-receipt me-2"></i>Order Details
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="container mt-5">
     <h2>Place Order</h2>
     <form id="orderForm">
@@ -76,6 +112,16 @@
         let customers = [];
         let itemsData = [];
 
+        // Fetch and set the order ID field with a generated ID from the server
+        $.ajax({
+            url: "http://localhost:8080/Application1_Web_exploded/generateOrderId",
+            type: "GET",
+            success: (data) => {
+                $('#orderId').val(data.newOrderId);
+            },
+            error: (err) => console.error("Error generating order ID:", err)
+        });
+
         // Fetch customers and populate the customerId dropdown
         $.ajax({
             url: "http://localhost:8080/Application1_Web_exploded/customer",
@@ -102,6 +148,7 @@
             type: "GET",
             success: (items) => {
                 itemsData = items;
+                console.log("Items fetched:", items); // Debug log
                 $('#items').empty();
                 items.forEach(item => {
                     $('#items').append(new Option(item.code, item.id));
@@ -114,6 +161,7 @@
         $('#items').change(() => {
             const selectedItemId = $('#items').val();
             const selectedItem = itemsData.find(item => item.id === selectedItemId);
+            console.log("Selected item:", selectedItem); // Debug log
             $('#ItemName').val(selectedItem ? selectedItem.description : '');
         });
 

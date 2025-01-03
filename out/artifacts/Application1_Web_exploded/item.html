@@ -54,12 +54,12 @@
 
     <hr/>
 
-    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#customerModal">
+    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#itemModal">
         Add New Item
     </button>
 
     <!-- Add Customer Modal -->
-    <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="container m-3">
@@ -73,12 +73,12 @@
                             <input type="text" class="form-control" id="description">
                         </div>
                         <div class="mb-3">
-                            <label for="qtyonhand" class="form-label">QtyOnHand</label>
-                            <input type="text" class="form-control" id="qtyonhand">
+                            <label for="qtyOnHand" class="form-label">QtyOnHand</label>
+                            <input type="text" class="form-control" id="qtyOnHand">
                         </div>
                         <div class="mb-3">
-                            <label for="unitprice" class="form-label">UnitPrice</label>
-                            <input type="text" class="form-control" id="unitprice">
+                            <label for="unitPrice" class="form-label">UnitPrice</label>
+                            <input type="text" class="form-control" id="unitPrice">
                         </div>
                         <button id="btn_save_item" type="submit" class="btn btn-success">Save</button>
                     </form>
@@ -175,20 +175,19 @@
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const fetchItemData = () => {
-        $.ajax({
-            url: "http://localhost:8080/Application1_Web_exploded/item",
-            type: "GET",
-            success: (res) => {
-                $('#item_table_body').empty();
-                res.forEach(item => {
-                    $('#item_table_body').append(`
+        const fetchItemData = () => {
+            $.ajax({
+                url: "http://localhost:8080/Application1_Web_exploded/item",
+                type: "GET",
+                success: (res) => {
+                    $('#item_table_body').empty();
+                    res.forEach(item => {
+                        $('#item_table_body').append(`
                     <tr>
                         <td>${item.code}</td>
                         <td>${item.description}</td>
                         <td>${item.qtyOnHand}</td>
                         <td>${item.unitPrice}</td>
-
                         <td>
                             <button class="btn btn-sm text-warning" onclick="editItem(
                                 '${item.code}',
@@ -203,97 +202,85 @@
                         </td>
                     </tr>
                     `);
-                });
-            },
-            error: (err) => console.error(err)
-        });
-    };
-
-    $("#btn_save_item").click((e) => {
-        e.preventDefault();
-        const code = $("#code").val();
-        const description = $("#description").val();
-        const qtyOnHand = $("#qtyonhand").val();
-        const unitPrice = $("#unitprice").val();
-
-        $.ajax({
-            url: "http://localhost:8080/Application1_Web_exploded/item",
-            type: "POST",
-            data: {
-                code: code,
-                description: description,
-                qtyOnHand: qtyOnHand,
-                unitPrice: unitPrice
-            },
-            success: (res) => {
-                fetchItemData();
-               $("#code").val("");
-                $("#description").val("");
-                $("#qtyonhand").val("");
-                $("#unitprice").val("");
-            },
-            error: (err) => console.error(err)
-        });
-    });
-
-    const editItem = (id,description,qtyOnHand,unitPrice) => {
-        $('#updated_item_id').val(id);
-        $('#updated_description').val(description);
-        $('#updated_qty_on_hand').val(qtyOnHand);
-        $('#updated_unit_price').val(unitPrice);
-        $('#updateItemModal').modal("show");
-    };
-
-    $("#btn_update_item").click((e) => {
-        e.preventDefault();
-
-        const id = $("#updated_item_id").val();
-        const description = $("#updated_description").val();
-        const qtyOnHand = $("#updated_qty_on_hand").val();
-        const unitPrice = $("#updated_unit_price").val();
-
-        $.ajax({
-            url: `http://localhost:8080/Application1_Web_exploded/item`,
-            type: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify({
-                code: id,
-                description: description,
-                qtyOnHand: qtyOnHand,
-                unitPrice: unitPrice
-            }),
-            success: (res) => {
-                console.log("Item updated successfully.");
-                fetchItemData();
-                $("#updated_item_id").val("");
-                $("#updated_description").val("");
-                $("#updated_qty_on_hand").val("");
-                $("#updated_unit_price").val("");
-                $("#updateItemModal").modal("hide");
-            },
-            error: (res) => {
-                console.error("Error updating Item:", res.responseText);
-            }
-        });
-    });
-    const deleteItem = (id) => {
-        if (confirm("Are you sure you want to delete this item?")) {
-            $.ajax({
-                url: `http://localhost:8080/Application1_Web_exploded/item?id=${id}`,
-                type: "DELETE",
-                success: () => {
-                    alert("Item deleted successfully.");
-                    fetchItemData();
+                    });
                 },
-                error: (err) => {
-                    console.error(err);
-                    alert("Failed to delete the item. Please try again.");
-                }
+                error: (err) => console.error(err)
             });
-        }
-    };
+        };
+        $("#btn_save_item").click((e) => {
+            e.preventDefault();
+            const code = $("#code").val();
+            const description = $("#description").val();
+            const qtyOnHand = $("#qtyOnHand").val();
+            const unitPrice = $("#unitPrice").val();
 
-    fetchItemData();
+            $.ajax({
+                url: "http://localhost:8080/Application1_Web_exploded/item",
+                type: "POST",
+                data: {code, description, qtyOnHand, unitPrice},
+                success: (res) => {
+                    fetchItemData();
+                    $("#code").val("");
+                    $("#description").val("");
+                    $("#qtyOnHand").val("");
+                    $("#unitPrice").val("");
+                    $('#itemModal').modal('hide');
+                },
+                error: (err) => console.error(err)
+            });
+        });
+        const editItem = (id, description, qtyOnHand, unitPrice) => {
+            $('#updated_item_id').val(id);
+            $('#updated_description').val(description);
+            $('#updated_qty_on_hand').val(qtyOnHand);
+            $('#updated_unit_price').val(unitPrice);
+            $('#updateItemModal').modal("show");
+        };
+
+        $("#btn_update_item").click((e) => {
+            e.preventDefault();
+
+            const id = $("#updated_item_id").val();
+            const description = $("#updated_description").val();
+            const qtyOnHand = $("#updated_qty_on_hand").val();
+            const unitPrice = $("#updated_unit_price").val();
+
+            $.ajax({
+                url: `http://localhost:8080/Application1_Web_exploded/item?code=${id}&description=${description}&qtyOnHand=${qtyOnHand}&unitPrice=${unitPrice}`,
+                type: "PUT",
+                success: (res) => {
+                    console.log("Item updated successfully.");
+                    fetchItemData();
+                    $("#updated_item_id").val("");
+                    $("#updated_description").val("");
+                    $("#updated_qty_on_hand").val("");
+                    $("#updated_unit_price").val("");
+                    $("#updateItemModal").modal("hide");
+                },
+                error: (res) => {
+                    console.error("Error updating Item:", res.responseText);
+            }
+            });
+        });
+
+        const deleteItem = (id) => {
+            if (confirm("Are you sure you want to delete this item?")) {
+                $.ajax({
+                    url: `http://localhost:8080/Application1_Web_exploded/item?id=${id}`,
+                    type: "DELETE",
+                    success: () => {
+                        alert("Item deleted successfully.");
+                        fetchItemData();
+                    },
+                    error: (err) => {
+                        console.error(err);
+                        alert("Failed to delete the item. Please try again.");
+                    }
+                });
+            }
+        };
+
+        fetchItemData();
 </script>
 </body>
 

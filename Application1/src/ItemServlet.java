@@ -8,9 +8,11 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.stream.JsonParsingException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,23 +78,35 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        String code = req.getParameter("code");
         String description = req.getParameter("description");
         String qtyOnHand = req.getParameter("qtyOnHand");
         String unitPrice = req.getParameter("unitPrice");
 
-        if (id == null || description == null || qtyOnHand == null || unitPrice == null) {
+        if (code == null || code.isEmpty() || description == null || description.isEmpty() || qtyOnHand == null || qtyOnHand.isEmpty() || unitPrice == null || unitPrice.isEmpty()) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().write("{\"error\" : \"Invalid request\"}");
             return;
         }
+
         Connection connection = getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO item VALUES(?, ?, ?, ?)");
-            preparedStatement.setString(1, id);
+            // Check if the item already exists
+            PreparedStatement checkStatement = connection.prepareStatement("SELECT * FROM item WHERE code = ?");
+            checkStatement.setString(1, code);
+            ResultSet resultSet = checkStatement.executeQuery();
+            if (resultSet.next()) {
+                resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                resp.getWriter().write("{\"error\" : \"Item already exists\"}");
+                return;
+            }
+
+            // Insert the new item
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?)");
+            preparedStatement.setString(1, code);
             preparedStatement.setString(2, description);
-            preparedStatement.setString(3, qtyOnHand);
-            preparedStatement.setString(4, unitPrice);
+            preparedStatement.setInt(3, Integer.parseInt(qtyOnHand));
+            preparedStatement.setDouble(4, Double.parseDouble(unitPrice));
             preparedStatement.executeUpdate();
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (SQLException e) {
@@ -102,37 +116,25 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BufferedReader reader = req.getReader();
-        JsonObject jsonObject = Json.createReader(reader).readObject();
+        String code = req.getParameter("code");
+        String description = req.getParameter("description");
+        String qtyOnHand = req.getParameter("qtyOnHand");
+        String unitPrice = req.getParameter("unitPrice");
 
-        String id = jsonObject.getString("code");
-        String description = jsonObject.getString("description");
-        int qtyOnHand;
-        double unitPrice;
-
-        try {
-            qtyOnHand = Integer.parseInt(jsonObject.getString("qtyOnHand"));
-            unitPrice = Double.parseDouble(jsonObject.getString("unitPrice"));
-        } catch (NumberFormatException e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\" : \"Invalid number format\"}");
-            return;
-        }
-
-        if (id == null || description == null || qtyOnHand == 0 || unitPrice == 0.0) {
+        if (code == null || code.isEmpty() || description == null || description.isEmpty() || qtyOnHand == null || qtyOnHand.isEmpty() || unitPrice == null || unitPrice.isEmpty()) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().write("{\"error\" : \"Invalid request\"}");
             return;
         } else {
             Connection connection = getConnection();
-            ItemDTO item = findById(id);
+           ItemDTO item = findById(code);
             try {
                 if (item != null) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE item SET description = ?, qtyOnHand = ?, unitPrice = ? WHERE code = ?");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE item SET description = ?, qtyOnHand = ?,unitPrice=? WHERE code = ?");
                     preparedStatement.setString(1, description);
-                    preparedStatement.setInt(2, qtyOnHand);
-                    preparedStatement.setDouble(3, unitPrice);
-                    preparedStatement.setString(4, id);
+                    preparedStatement.setString(2, qtyOnHand);
+                    preparedStatement.setString(3, unitPrice);
+                    preparedStatement.setString(4, code);
                     preparedStatement.executeUpdate();
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 } else {
@@ -151,19 +153,18 @@ public class ItemServlet extends HttpServlet {
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                String code = resultSet.getString(1);
                 String description = resultSet.getString(2);
+                String qtyOnHand = resultSet.getString(3);
+                String unitPrice = resultSet.getString(4);
 
-                int qtyOnHand = resultSet.getInt(3);
-                double unitPrice = resultSet.getDouble(4);
-
-                return new ItemDTO(code, description, qtyOnHand, unitPrice);
+                return new ItemDTO();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
     }
+
 
 
     @Override

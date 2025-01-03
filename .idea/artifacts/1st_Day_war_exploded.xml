@@ -6,6 +6,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="1st &amp; 2nd-Day" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="commons-dbcp2-2.13.0" />
+          <element id="library" level="project" name="javax.json-1.1.4" />
+          <element id="library" level="project" name="mysql-connector-j-9.1.0" />
+        </element>
       </element>
       <element id="javaee-facet-resources" facet="1st-Day/web/Web" />
     </root>

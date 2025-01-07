@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>POS System</title>
-    <link rel="icon" href="assets/images/posLogo.png"/>
+<!--    <link rel="icon" href="assets/images/posLogo.png"/>-->
 
     <!-- Font Awesome, Bootstrap, Google Icon and Chart.js CDN -->
     <link
@@ -31,17 +31,17 @@
 <body>
 <header>
     <nav
-            class="navbar navbar-expand-md navbar-light bg-light border-bottom border-success border-3 rounded-3 mb-4 position-fixed top-0 z-3 w-100"
+            class="navbar navbar-expand-md  navbar bg-success data-bs-theme=dark border-3 rounded-3 mb-4 position-fixed top-0 z-3 w-100"
     >
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-dark border-2 logo" href="#">
-                <img
-                        src="assets/images/posLogo.png"
-                        alt="POS Logo"
-                        class="d-inline-block align-text-top"
-                />
-                POS System
-            </a>
+<!--            <a class="navbar-brand fw-bold text-primary border-2 logo" href="#">-->
+<!--&lt;!&ndash;                <img&ndash;&gt;-->
+<!--&lt;!&ndash;                        src="assets/images/posLogo.png"&ndash;&gt;-->
+<!--&lt;!&ndash;                        alt="POS Logo"&ndash;&gt;-->
+<!--&lt;!&ndash;                        class="d-inline-block align-text-top"&ndash;&gt;-->
+<!--&lt;!&ndash;                />&ndash;&gt;-->
+<!--                POS System-->
+<!--            </a>-->
             <button
                     id="burger-btn"
                     class="navbar-toggler border-0"
@@ -100,7 +100,7 @@
                 <div class="col-lg-12 px-0 py-3 px-lg-3">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="card text-white bg-primary ps-2 mb-4">
+                            <div class="card text-primary-emphasis ps-2 mb-4">
                                 <div class="card-body d-flex align-items-center gap-4">
                                     <i class="fa-solid fa-users fs-1"></i>
                                     <div>
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="card text-white bg-success ps-2 mb-4">
+                            <div class="card text-primary-emphasis ps-2 mb-4">
                                 <div class="card-body d-flex align-items-center gap-4">
                                     <i class="fa-solid fa-box fs-1"></i>
                                     <div>
@@ -129,7 +129,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="card text-white bg-warning ps-2 mb-4">
+                            <div class="card text-primary-emphasis ps-2 mb-4">
                                 <div class="card-body d-flex align-items-center gap-4">
                                     <i class="fa-solid fa-cart-shopping fs-1"></i>
                                     <div>
@@ -152,7 +152,7 @@
         <div class="container-fluid px-lg-5 my-5">
             <div class="row label p-2 m-auto">
                 <div class="col-lg-12">
-                    <h1 class="fw-medium text-start my-auto">
+                    <h1 class="fw-medium text-start my-auto text-info">
                         <i class="fa-solid fa-users"></i>
                         Customers
                     </h1>
@@ -165,7 +165,7 @@
                                 class="col-md-6 border border-1 rounded-3 p-0 border-dark-subtle"
                         >
                             <h5
-                                    class="fw-normal ps-3 p-2 m-0 w-100 bg-success rounded-top-2 text-light"
+                                    class="fw-normal ps-3 p-2 m-0 w-100 bg-danger rounded-top-2 text-light"
                             >
                                 Customer Search
                             </h5>
@@ -206,13 +206,13 @@
                                     class="w-75 d-flex justify-content-center flex-column gap-2"
                             >
                                 <button
-                                        class="btn btn-info px-4 rounded-2 w-100 mb-1"
+                                        class="btn btn-success px-4 rounded-2 w-100 mb-1 "
                                         data-bs-toggle="modal"
                                         data-bs-target="#newCustomerModal"
                                 >
                                     New Customer
                                 </button>
-                                <button class="btn btn-warning px-4 rounded-2 w-100">
+                                <button class="btn btn-secondary px-4 rounded-2 w-100">
                                     View All Customers
                                 </button>
                             </div>
@@ -230,7 +230,7 @@
                                     Delete
                                 </button>
                                 <button
-                                        class="btn btn-info text-white px-4 rounded-1"
+                                        class="btn btn-warning text-white px-4 rounded-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#updateCustomerModal"
                                 >
@@ -238,7 +238,7 @@
                                 </button>
                                 <button
                                         id="clear-customer-btn"
-                                        class="btn btn-success text-white px-4 rounded-1"
+                                        class="btn btn-primary text-white px-4 rounded-1"
                                 >
                                     Clear
                                 </button>
@@ -273,7 +273,7 @@
         <div class="modal fade" id="newCustomerModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content rounded-0">
-                    <div class="modal-header bg-success text-white rounded-0">
+                    <div class="modal-header bg-primary text-white rounded-0">
                         <h5 class="modal-title">New Customer</h5>
                         <button
                                 type="button"
@@ -349,7 +349,7 @@
                             <div class="modal-footer button-set mt-4">
                                 <button
                                         type="submit"
-                                        class="btn btn-info rounded-1 text-light"
+                                        class="btn btn-success rounded-1 text-light"
                                 >
                                     Save
                                 </button>
@@ -372,7 +372,7 @@
         <div class="modal fade" id="updateCustomerModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content rounded-0">
-                    <div class="modal-header bg-success text-white rounded-0">
+                    <div class="modal-header bg-primary text-white rounded-0">
                         <h5 class="modal-title">Update Customer</h5>
                         <button
                                 type="button"
@@ -448,7 +448,7 @@
                             <div class="modal-footer button-set mt-4">
                                 <button
                                         type="submit"
-                                        class="btn btn-info rounded-1 text-light"
+                                        class="btn btn-success rounded-1 text-light"
                                 >
                                     Update
                                 </button>
@@ -473,7 +473,7 @@
         <div class="container-fluid px-lg-5 my-5">
             <div class="row label p-2 m-auto">
                 <div class="col-lg-12">
-                    <h1 class="fw-medium text-start my-auto">
+                    <h1 class="fw-medium text-success my-auto">
                         <i class="fa-solid fa-cubes"></i>
                         Items
                     </h1>
@@ -484,7 +484,7 @@
                     <div class="row m-auto">
                         <div class="col-lg-6 border rounded-3 p-0 border-dark-subtle">
                             <h2
-                                    class="fw-normal fs-5 ps-3 p-2 m-0 w-100 bg-success text-light rounded-top-2"
+                                    class="fw-normal fs-5 ps-3 p-2 m-0 w-100 bg-warning text-light rounded-top-2"
                             >
                                 Item Search
                             </h2>
@@ -503,7 +503,7 @@
                                         <div class="d-flex gap-1 mt-3">
                                             <button
                                                     type="submit"
-                                                    class="btn btn-success px-3 rounded-1"
+                                                    class="btn btn-info px-3 rounded-1"
                                             >
                                                 Search
                                             </button>
@@ -524,7 +524,7 @@
                                     class="w-75 d-flex justify-content-center flex-column gap-2"
                             >
                                 <button
-                                        class="btn btn-info px-4 rounded-1 w-100 mb-1"
+                                        class="btn btn-danger px-4 rounded-1 w-100 mb-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#newItemModal"
                                 >
@@ -532,7 +532,7 @@
                                 </button>
                                 <button
                                         id="load-all-item-btn"
-                                        class="btn btn-warning px-4 rounded-1 w-100"
+                                        class="btn btn-primary px-4 rounded-1 w-100"
                                 >
                                     View All Items
                                 </button>
@@ -551,7 +551,7 @@
                                     Delete
                                 </button>
                                 <button
-                                        class="btn btn-info text-white px-4 rounded-1"
+                                        class="btn btn-success text-white px-4 rounded-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#updateItemModal"
                                 >
@@ -559,7 +559,7 @@
                                 </button>
                                 <button
                                         id="clear-item-btn"
-                                        class="btn btn-success text-white px-4 rounded-1"
+                                        class="btn btn-warning text-white px-4 rounded-1"
                                 >
                                     Clear
                                 </button>
@@ -594,7 +594,7 @@
         <div class="modal fade" id="newItemModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content rounded-0">
-                    <div class="modal-header bg-success text-white rounded-0">
+                    <div class="modal-header bg-primary text-white rounded-0">
                         <h5 class="modal-title">New Item</h5>
                         <button
                                 type="button"
@@ -668,7 +668,7 @@
                             <div class="modal-footer button-set mt-4">
                                 <button
                                         type="submit"
-                                        class="btn btn-info rounded-1 text-light"
+                                        class="btn btn-success rounded-1 text-light"
                                 >
                                     Save
                                 </button>
@@ -691,7 +691,7 @@
         <div class="modal fade" id="updateItemModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content rounded-0">
-                    <div class="modal-header bg-success text-white rounded-0">
+                    <div class="modal-header bg-info text-white rounded-0">
                         <h5 class="modal-title">Update Item</h5>
                         <button
                                 type="button"
@@ -765,7 +765,7 @@
                             <div class="modal-footer button-set mt-4">
                                 <button
                                         type="submit"
-                                        class="btn btn-info rounded-1 text-light"
+                                        class="btn btn-success rounded-1 text-light"
                                 >
                                     Update
                                 </button>
@@ -1167,59 +1167,59 @@
     </div>
 </main>
 
-<footer>
-    <div class="container-fluid bg-secondary-subtle pt-4">
-        <div class="container">
-            <div class="row justify-content-between flex-wrap gap-2">
-                <!-- Logo and Description Section -->
-                <div
-                        class="col-lg-5 col-md-4 ms-lg-5 d-flex flex-column justify-content-center align-items-start"
-                >
-                    <div class="d-flex align-items-center mb-3">
-                        <img
-                                src="assets/images/posLogo.png"
-                                alt="POS Logo"
-                                width="40"
-                                class="me-2"
-                        />
-                        <h5 class="logo mb-0">POS System</h5>
-                    </div>
-                    <p class="text-muted small">
-                        Your complete point of sale solution for modern business
-                        management.
-                    </p>
-                </div>
+<!--<footer>-->
+<!--    <div class="container-fluid bg-secondary-subtle pt-4">-->
+<!--        <div class="container">-->
+<!--            <div class="row justify-content-between flex-wrap gap-2">-->
+<!--                &lt;!&ndash; Logo and Description Section &ndash;&gt;-->
+<!--                <div-->
+<!--                        class="col-lg-5 col-md-4 ms-lg-5 d-flex flex-column justify-content-center align-items-start"-->
+<!--                >-->
+<!--                    <div class="d-flex align-items-center mb-3">-->
+<!--                        <img-->
+<!--                                src="assets/images/posLogo.png"-->
+<!--                                alt="POS Logo"-->
+<!--                                width="40"-->
+<!--                                class="me-2"-->
+<!--                        />-->
+<!--                        <h5 class="logo mb-0">POS System</h5>-->
+<!--                    </div>-->
+<!--                    <p class="text-muted small">-->
+<!--                        Your complete point of sale solution for modern business-->
+<!--                        management.-->
+<!--                    </p>-->
+<!--                </div>-->
 
-                <!-- Social Media Section -->
-                <div
-                        class="col-lg-5 col-md-4 mb-sm-2 d-flex flex-column justify-content-center align-items-center"
-                >
-                    <h6 class="fw-bold text-success">Connect With Us</h6>
-                    <div class="d-flex gap-3">
-                        <a href="https://facebook.com" class="text-success fs-4">
-                            <i class="fa-brands fa-facebook"></i>
-                        </a>
-                        <a href="https://x.com" class="text-success fs-4">
-                            <i class="fa-brands fa-x-twitter"></i>
-                        </a>
-                        <a href="https://linkedin.com" class="text-success fs-4">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </a>
-                        <a href="https://instagram.com" class="text-success fs-4">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Copyright Section -->
-            <div class="border-top border-success py-3 mt-3">
-                <p class="text-center text-muted small mb-0">
-                    ©Copyright 2024 POS-System. All Rights Reserved.
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
+<!--                &lt;!&ndash; Social Media Section &ndash;&gt;-->
+<!--                <div-->
+<!--                        class="col-lg-5 col-md-4 mb-sm-2 d-flex flex-column justify-content-center align-items-center"-->
+<!--                >-->
+<!--                    <h6 class="fw-bold text-success">Connect With Us</h6>-->
+<!--                    <div class="d-flex gap-3">-->
+<!--                        <a href="https://facebook.com" class="text-success fs-4">-->
+<!--                            <i class="fa-brands fa-facebook"></i>-->
+<!--                        </a>-->
+<!--                        <a href="https://x.com" class="text-success fs-4">-->
+<!--                            <i class="fa-brands fa-x-twitter"></i>-->
+<!--                        </a>-->
+<!--                        <a href="https://linkedin.com" class="text-success fs-4">-->
+<!--                            <i class="fa-brands fa-linkedin"></i>-->
+<!--                        </a>-->
+<!--                        <a href="https://instagram.com" class="text-success fs-4">-->
+<!--                            <i class="fa-brands fa-instagram"></i>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Copyright Section &ndash;&gt;-->
+<!--            <div class="border-top border-success py-3 mt-3">-->
+<!--                <p class="text-center text-muted small mb-0">-->
+<!--                    ©Copyright 2024 POS-System. All Rights Reserved.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
